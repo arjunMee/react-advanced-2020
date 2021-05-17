@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react'
 
-const ErrorExample = () => {
-  return <h2>useState error example</h2>;
-};
+const error = () => {
+  let [title, setTitle] = useState('hello word again')
 
-export default ErrorExample;
+  let handler = () => {
+    setTitle('hello melo')
+  }
+
+  return (
+    <>
+      <h2>{title}</h2>
+      <button type='button' className='btn' onClick={handler}>
+        random text
+      </button>
+    </>
+  )
+}
+
+export default error

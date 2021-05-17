@@ -1,7 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 const UseStateBasics = () => {
-  return <h2>useState basic example</h2>;
-};
+  let [title, setTitle] = useState('hello')
 
-export default UseStateBasics;
+  let handler = () => {
+    setTitle('hello baby')
+  }
+
+  return (
+    <>
+      <h1>{title}</h1>
+      <button className='btn' type='button' onClick={handler}>
+        change color
+      </button>
+    </>
+  )
+}
+
+export default UseStateBasics
