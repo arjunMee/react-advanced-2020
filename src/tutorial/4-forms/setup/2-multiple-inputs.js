@@ -8,23 +8,37 @@ import React, { useState } from 'react'
 const ControlledInputs = () => {
   // let [name, setName] = useState('')
   // let [email, setEmail] = useState('')
-  // let [age, setAge] = useState()
+  // let [age, setAge] = useState('')
   let [person, setPerson] = useState({ name: '', email: '', age: '' })
   let [people, setPeople] = useState([])
 
-  let handleChange = (e) => {
-    let nam = e.target.name
-    let value = e.target.value
-    setPerson({ ...person, [nam]: value })
-  }
-  let handlerSubmit = (e) => {
+  const hendleSubmit = (e) => {
     e.preventDefault()
     let { name, email, age } = person
+
     if (name && email && age) {
+      // let peopl = { name, email, age, id: new Date().getTime().toString() }
+      // setPeople([...people, peopl])
+      // setEmail('')
+      // setName('')
+      // setAge('')
+
       setPeople([...people, { ...person, id: new Date().getTime().toString() }])
+      setPerson({ name: '', email: '', age: '' })
+    } else {
+      console.log('hello')
     }
-    setPerson({ name: '', email: '', age: '' })
   }
+
+  let handlerChange = (e) => {
+    let name = e.target.name
+    let value = e.target.value
+    // console.log(name, value)
+    setPerson((person) => {
+      return { ...person, [name]: value }
+    })
+  }
+
   return (
     <>
       <article>
@@ -35,7 +49,7 @@ const ControlledInputs = () => {
               type='Text'
               id='Name'
               name='name'
-              onChange={handleChange}
+              onChange={handlerChange}
               value={person.name}
             />
           </div>
@@ -46,7 +60,7 @@ const ControlledInputs = () => {
               id='email'
               name='email'
               value={person.email}
-              onChange={handleChange}
+              onChange={handlerChange}
             />
           </div>
           <div className='form-control'>
@@ -56,10 +70,10 @@ const ControlledInputs = () => {
               id='age'
               name='age'
               value={person.age}
-              onChange={handleChange}
+              onChange={handlerChange}
             />
           </div>
-          <button type='submit' onClick={handlerSubmit}>
+          <button type='submit' onClick={hendleSubmit}>
             add person
           </button>
         </form>
