@@ -11,7 +11,7 @@ const ErrorExample = () => {
     <React.Fragment>
       <h2>{title}</h2>
       <button type='button' className='btn' onClick={handleClick}>
-        change p
+        ch
       </button>
     </React.Fragment>
   )
