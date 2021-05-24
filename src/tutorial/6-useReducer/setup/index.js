@@ -32,15 +32,12 @@ const Index = () => {
   let handleSubmit = (e) => {
     e.preventDefault()
     if (name) {
-      // setshowModel(true)
-      // setPeople([...people, { id: new Date().getTime().toString(), name }])
       dispatch({
         type: 'ADD_ITEM',
         payLoad: { id: new Date().getTime().toString(), name },
       })
     } else {
       dispatch({ type: 'NO_VALUE' })
-      // setshowModel(true)
     }
   }
 
