@@ -1,24 +1,8 @@
 import React, { useState, useReducer } from 'react'
 import Modal from './Modal'
+import { reducer } from './reducer'
 import { data } from '../../../data'
-// reducer function
-let reducer = (state, action) => {
-  const newAr = [...state.people, action.payLoad]
-  if (action.type === 'ADD_ITEM') {
-    return {
-      ...state,
-      people: newAr,
-      isModelOpen: true,
-      modelaContent: 'item added',
-    }
-  }
 
-  if (action.type === 'NO_VALUE') {
-    return { ...state, isModelOpen: true, modelaContent: 'please ad dsgdg' }
-  }
-  // return state
-  throw new Error('np match found')
-}
 //inintial state
 let defaultState = {
   people: [],
@@ -39,11 +23,20 @@ const Index = () => {
     } else {
       dispatch({ type: 'NO_VALUE' })
     }
+    setName('')
   }
+
+  const closeModel = () => {
+    dispatch({ type: 'CLOSE_MODEL' })
+  }
+
+  // const remove
 
   return (
     <>
-      {state.isModelOpen && <Modal modelaContent={state.modelaContent} />}
+      {state.isModelOpen && (
+        <Modal closeModel={closeModel} modelaContent={state.modelaContent} />
+      )}
       <form className='form' onSubmit={handleSubmit}>
         <div>
           <input
@@ -55,9 +48,15 @@ const Index = () => {
         <button type='submit'>add</button>
       </form>
       {state.people.map(({ id, name }) => {
+        console.log(name, id)
         return (
-          <div key={id}>
-            <h3>'hello' + {name} + 'plus'</h3>
+          <div key={id} className='item'>
+            <h3>{name}</h3>
+            <button
+              onClick={() => dispatch({ type: 'REMOVE_NAME', payLoad: id })}
+            >
+              remove
+            </button>
           </div>
         )
       })}
