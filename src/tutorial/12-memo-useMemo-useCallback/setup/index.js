@@ -10,29 +10,54 @@ const url = 'https://course-api.com/javascript-store-products'
 const Index = () => {
   const { products } = useFetch(url)
   const [count, setCount] = useState(0)
+  const [cart, setCart] = useState(0)
 
+  // const addToCart = () => {
+  //   setCart(cart + 1)
+  // }
+
+  const addToCart = useCallback(() => {
+    setCart(cart + 1)
+  }, [cart])
+
+  // useEffect(() => {
+  //   console.log('index1')
+  // }, [])
   return (
     <>
       <h1>Count : {count}</h1>
       <button className='btn' onClick={() => setCount(count + 1)}>
         click me
       </button>
-      <BigList products={products} />
+      <h3 style={{ marginTop: '3em' }}>{cart}</h3>
+      <BigList products={products} addToCart={addToCart} />
     </>
   )
 }
 
-const BigList = ({ products }) => {
+const BigList = React.memo(({ products, addToCart }) => {
+  useEffect(() => {
+    console.log('biglist')
+  })
   return (
     <section className='products'>
       {products.map((product) => {
-        return <SingleProduct key={product.id} {...product}></SingleProduct>
+        return (
+          <SingleProduct
+            key={product.id}
+            {...product}
+            addToCart={addToCart}
+          ></SingleProduct>
+        )
       })}
     </section>
   )
-}
+})
 
-const SingleProduct = ({ fields }) => {
+const SingleProduct = ({ fields, addToCart }) => {
+  useEffect(() => {
+    console.log('single')
+  })
   let { name, price } = fields
   price = price / 100
   const image = fields.image[0].url
@@ -42,6 +67,7 @@ const SingleProduct = ({ fields }) => {
       <img src={image} alt={name} />
       <h4>{name}</h4>
       <p>${price}</p>
+      <button onClick={addToCart}>remove</button>
     </article>
   )
 }
